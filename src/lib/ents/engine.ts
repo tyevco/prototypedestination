@@ -1,7 +1,7 @@
-import System from "./system";
-import Entity from "./entity";
+import { System } from "./system";
+import { Entity } from "./entity";
 
-export default class Engine {
+export class Engine {
     entities: Array<Entity> = [];
     systems: Array<System> = [];
     steps: number = 0;

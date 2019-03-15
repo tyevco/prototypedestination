@@ -1,7 +1,7 @@
-import Component from "./component";
-import Entity from "./entity";
+import { Component } from "./component";
+import { Entity } from "./entity";
 
-export default class System {
+export class System {
     components: Array<Component> = [];
 
     before() { };

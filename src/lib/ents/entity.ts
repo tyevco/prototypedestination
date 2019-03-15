@@ -1,6 +1,6 @@
-import Component from "./component";
+import { Component } from "./component";
 
-export default class Entity {
+export class Entity {
     dirty: boolean = false;
     private components: { [name: string]: Component } = {};
 
