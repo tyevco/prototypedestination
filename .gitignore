@@ -1,0 +1,5 @@
+.vs/
+.vscode/
+.git/
+node_modules/
+dist/bundle.js
