@@ -1,5 +1,13 @@
 import { System } from "../../lib/ents/system";
+import CanvasContextHelper from "../helpers/canvascontext";
 
-export class CameraRenderer extends System {
+// Sprite, Location
+export class SpriteRenderer extends System {
+    context: CanvasRenderingContext2D;
 
+    constructor() {
+        super();
+
+        this.context = CanvasContextHelper.get2dContext();
+    }
 }
