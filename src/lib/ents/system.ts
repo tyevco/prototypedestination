@@ -6,11 +6,11 @@ export class System {
     afterComponents: Array<string>;
     beforeComponents: Array<string>;
 
-    before() { };
-    act(entity: Entity, ...components: Array<Component>) { };
-    after() { };
+    before(): void { };
+    act(entity: Entity, ...components: Array<Component>): void { };
+    after(): void { };
 
-    step(entities: Array<Entity>) {
+    step(entities: Array<Entity>): void {
         if (typeof this.components !== "undefined") {
             var length = entities.length;
             for (var i = length - 1; i >= 0; i--) {
