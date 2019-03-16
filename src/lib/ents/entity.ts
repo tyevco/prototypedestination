@@ -19,8 +19,14 @@ export class Entity {
         return this.components[name];
     }
 
-    removeComponent(c: Component): Entity {
-        var componentName = c.Name;
+    removeComponent(name: string | Component): Entity {
+        let componentName: string;
+        if (typeof name !== "string") {
+            componentName = (name as Component).Name;
+        } else {
+            componentName = name;
+        }
+        
         if (!!this.components[componentName]) {
             delete this.components[componentName];
             this.dirty = true;
@@ -28,7 +34,7 @@ export class Entity {
         return this;
     }
 
-    hasComponent(c: Component): boolean {
-        return !!this.components[c.Name];
+    hasComponent(name: string): boolean {
+        return !!this.components[name];
     }
 }

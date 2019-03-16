@@ -2,10 +2,10 @@ import { Component } from "./component";
 import { Entity } from "./entity";
 
 export class System {
-    components: Array<Component> = [];
+    components: Array<string> = [];
 
     before() { };
-    act(e: Entity) { };
+    act(entity: Entity, ...components: Array<Component>) { };
     after() { };
 
     step(entities: Array<Entity>) {
@@ -13,9 +13,9 @@ export class System {
         for (var i = length - 1; i >= 0; i--) {
             var entity = entities[i];
             var systemArgs: Array<any> = [entity];
-            if (this.components.every(function (c) {
-                if (entity.hasComponent(c)) {
-                    systemArgs.push(entity.getComponent(c.Name));
+            if (this.components.every(function (componentName) {
+                if (entity.hasComponent(componentName)) {
+                    systemArgs.push(entity.getComponent(componentName));
                     return true;
                 }
                 return false;
@@ -25,3 +25,13 @@ export class System {
         }
     }
 }
+
+export function usesComponents<T extends System>(...componentNames: Array<string>) {
+
+    return (constructor: T) => {
+        for (let componentName of componentNames) {
+            constructor.components.push(componentName);
+        }
+        debugger;
+    };
+};
