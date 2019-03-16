@@ -63,8 +63,7 @@ export class Engine {
      * Performs a single step of the engine.
      */
     perform(): void {
-        for (var id in this.systems) {
-            var system = this.systems[id];
+        for (var system of this.systems) {
             system.before();
             system.step(this.entities);
             system.after();
