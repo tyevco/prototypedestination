@@ -4,6 +4,4 @@ import { Vector2 } from "../spatial/Vector2";
 
 export default class Physics extends Component {
     public Velocity: Vector2;
-    public Rotation: number;
-    public WorldPosition: Vector2;
 }

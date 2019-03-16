@@ -1,7 +1,5 @@
 import { Engine, System, Component } from "../lib/ents";
-import { SpriteRenderer } from "./systems/spriterenderer";
-import { PhysicsEngine } from "./systems/physicsengine";
-import { MouseMonitor } from "./systems/mousemonitor";
+import { SpriteRenderer, PhysicsEngine, MouseMonitor } from "./systems";
 import { EntityCreator } from "./helpers/entitycreator";
 
 export default class Game {
@@ -10,10 +8,10 @@ export default class Game {
     constructor() {
         this.engine = new Engine();
 
-        
+
     }
 
-    initialize() : void {
+    initialize(): void {
         this.engine.addSystem(new SpriteRenderer());
         this.engine.addSystem(new PhysicsEngine());
         this.engine.addSystem(new MouseMonitor());
@@ -22,7 +20,7 @@ export default class Game {
         this.engine.addEntity(EntityCreator.createPlayer());
     }
 
-    begin() : void {
+    begin(): void {
         this.engine.run(50);
     }
 }
