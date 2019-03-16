@@ -37,6 +37,23 @@ export class Vector2 implements ICloneable<Vector2> {
         this.y = y;
     }
 
+    public vectorTo(other: Vector2): Vector2 {
+        return new Vector2(this.x - other.x, this.y - other.y);
+    }
+
+    public distanceTo(other: Vector2): number {
+        return Math.sqrt(Math.pow(other.x - this.x, 2) + Math.pow(other.y - this.y, 2));
+    }
+
+    public length(): number {
+        return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
+    }
+
+    public normal(): Vector2 {
+        let dist: number = this.length();
+        return new Vector2(this.x / dist, this.y / dist);
+    }
+
     clone(): Vector2 {
         return new Vector2(this.x, this.y);
     }
