@@ -1,4 +1,4 @@
-import Game from "./app/game";
+import { Game } from "./app/game";
 
 let game: Game = new Game();
 game.initialize();

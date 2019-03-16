@@ -2,7 +2,7 @@ import { Engine, System, Component } from "../lib/ents";
 import { SpriteRenderer, PhysicsEngine, MouseMonitor } from "./systems";
 import { EntityCreator } from "./helpers/entitycreator";
 
-export default class Game {
+export class Game {
     engine: Engine;
 
     constructor() {

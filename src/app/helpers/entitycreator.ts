@@ -1,11 +1,7 @@
 import { Entity } from "../../lib/ents";
-import { Player } from "../components/player";
-import Physics from "../components/physics";
+import { Player, Sprite, Physics, RigidBody } from "../components";
 import { Vector2 } from "../spatial/Vector2";
-import { Sprite } from "../components/sprite";
 import { Vertex } from "../drawing/vertex";
-import { RigidBody } from "../components";
-
 
 export class EntityCreator {
     public static createPlayer(): Entity {

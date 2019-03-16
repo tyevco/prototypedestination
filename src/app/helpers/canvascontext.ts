@@ -1,5 +1,5 @@
 
-export default class CanvasContextHelper {
+export class CanvasContextHelper {
     private static canvasContext: CanvasRenderingContext2D = null;
 
     public static get2dContext() {

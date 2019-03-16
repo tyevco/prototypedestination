@@ -1,9 +1,9 @@
-import { System, usesComponents } from "../../lib/ents/system";
-import CanvasContextHelper from "../helpers/canvascontext";
+import { System, usesComponents, usesComponentsBefore } from "../../lib/ents/system";
+import { CanvasContextHelper } from "../helpers/canvascontext";
 import { Entity } from "../../lib/ents";
-import { Sprite, RigidBody } from "../components";
+import { Sprite, RigidBody, Camera } from "../components";
 
-// Sprite, Location
+@usesComponentsBefore(Camera.Name)
 @usesComponents(Sprite.Name, RigidBody.Name)
 export class SpriteRenderer extends System {
     context: CanvasRenderingContext2D;
