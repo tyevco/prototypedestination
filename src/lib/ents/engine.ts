@@ -28,7 +28,7 @@ export class Engine {
     /***
      * Runs the engine at a specified interval until maxSteps is reached.
      */
-    run(interval: number, maxSteps: number): void {
+    run(interval: number, maxSteps: number = 0): void {
         var self = this;
 
         if (maxSteps === null || maxSteps === undefined) {
