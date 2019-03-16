@@ -1,10 +1,9 @@
 import { System } from "../../lib/ents/system";
 import { CanvasContextHelper } from "../helpers/canvascontext";
-import { MouseHandler } from "../../lib/lang";
+import { IMouseHandler } from "../../lib/lang";
 
 
-export class MouseMonitor extends System implements MouseHandler {
-    mouseDown: boolean = false;
+export class MouseMonitor extends System implements IMouseHandler {
 
     constructor() {
         super();

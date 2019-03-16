@@ -1,5 +1,6 @@
 
 
 export * from "./sealed";
-export * from "./keyboardhandler";
-export * from "./mousehandler";
+export * from "./ikeyboardhandler";
+export * from "./imousehandler";
+export * from "./icloneable";
