@@ -1,11 +1,13 @@
 import { Vertex } from "../drawing/vertex";
+import { Component } from "../../lib/ents";
 
 
-export class Sprite {
-    vertices: Array<Vertex> = new Array<Vertex>();
-    rotation: number;
-    
+export class Sprite extends Component {
+    public Vertices: Array<Vertex> = new Array<Vertex>();
+
     constructor(...vertices: Array<Vertex>) {
-        this.vertices = vertices;
+        super();
+        
+        this.Vertices = vertices;
     }
 }
