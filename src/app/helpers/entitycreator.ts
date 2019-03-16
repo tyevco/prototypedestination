@@ -1,5 +1,5 @@
 import { Entity } from "../../lib/ents";
-import { Player, Sprite, Physics, RigidBody } from "../components";
+import { Player, Sprite, Physics, RigidBody, Camera } from "../components";
 import { Vector2 } from "../spatial/Vector2";
 import { Vertex } from "../drawing/vertex";
 
@@ -9,16 +9,16 @@ export class EntityCreator {
 
         entity.addComponent(new Player());
 
-        let physics = new Physics();
+        let physics: Physics = new Physics();
         physics.Velocity = new Vector2(0, 0);
         entity.addComponent(physics);
 
-        let rigidBody = new RigidBody();
+        let rigidBody: RigidBody = new RigidBody();
         rigidBody.Rotation = 0;
         rigidBody.WorldPosition = new Vector2(0, 0);
         entity.addComponent(rigidBody);
 
-        let sprite = new Sprite(
+        let sprite: Sprite = new Sprite(
             new Vertex(0, 0),
             new Vertex(1, 0),
             new Vertex(1, 1),
@@ -26,6 +26,14 @@ export class EntityCreator {
         );
 
         entity.addComponent(sprite);
+        return entity;
+    }
+
+    public createCamera(): Entity {
+        let entity: Entity = new Entity();
+
+        entity.addComponent(new Camera());
+
         return entity;
     }
 }
