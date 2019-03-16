@@ -7,10 +7,16 @@ export class Engine {
     steps: number = 0;
     active: boolean = false;
 
+    addEntity(e: Entity): Entity {
+        this.entities.push(e);
+
+        return e;
+    }
+
     /**
-     * Adds an Entity to the engine.
+     * Creates an Entity to the engine.
      */
-    createEntity(e: Entity): Entity {
+    createEntity(): Entity {
         var entity = new Entity();
         this.entities.push(entity);
 
