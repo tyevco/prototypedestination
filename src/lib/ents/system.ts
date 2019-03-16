@@ -3,6 +3,8 @@ import { Entity } from "./entity";
 
 export class System {
     components: Array<string>;
+    afterComponents: Array<string>;
+    beforeComponents: Array<string>;
 
     before() { };
     act(entity: Entity, ...components: Array<Component>) { };
@@ -28,9 +30,20 @@ export class System {
     }
 }
 
-export function usesComponents<T extends { new(...args: any[]): System }>(...componentNames: Array<string>) {
+export function usesComponentsBefore<T extends { new(...args: any[]): System }>(...componentNames: Array<string>) {
+    return function (constructor: T) {
+        Object.assign(constructor.prototype, { beforeComponents: componentNames });
+    };
+}
 
-    return function (constructor: Function) {
+export function usesComponents<T extends { new(...args: any[]): System }>(...componentNames: Array<string>) {
+    return function (constructor: T) {
         Object.assign(constructor.prototype, { components: componentNames });
     };
 };
+
+export function usesComponentsAfter<T extends { new(...args: any[]): System }>(...componentNames: Array<string>) {
+    return function (constructor: T) {
+        Object.assign(constructor.prototype, { afterComponents: componentNames });
+    };
+}
