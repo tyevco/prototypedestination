@@ -1,6 +1,6 @@
+import { ICloneable } from "../../lib/lang";
 
-
-export class Vector2 {
+export class Vector2 implements ICloneable<Vector2> {
     private x: number = 0;
 
     private y: number = 0;
@@ -29,6 +29,15 @@ export class Vector2 {
     }
 
     public static get Zero(): Vector2 {
-        return Vector2.zero;
+        return Vector2.zero.clone();
+    }
+
+    public set(x: number, y: number): void {
+        this.x = x;
+        this.y = y;
+    }
+
+    clone(): Vector2 {
+        return new Vector2(this.x, this.y);
     }
 }
