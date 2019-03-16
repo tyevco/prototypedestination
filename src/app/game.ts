@@ -1,7 +1,4 @@
-import Engine from "../lib/ents/engine";
-import System from "../lib/ents/system";
-import Component from "../lib/ents/component";
-
+import { Engine, System, Component } from "../lib/ents";
 
 export default class Game {
     engine: Engine;
