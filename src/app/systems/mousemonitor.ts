@@ -21,15 +21,16 @@ export class MouseMonitor extends System implements IMouseHandler {
     }
 
     onMouseDown(event: MouseEvent): void {
-        console.log(event);
-
-        this.mouseDown = true;
-        // transform clientX/Y to worldX/Y.
-        this.downPosition = new Vector2(event.clientX, event.clientY);
+        // console.log(event);
+        if (!this.mouseDown) {
+            this.mouseDown = true;
+            // transform clientX/Y to worldX/Y.
+            this.downPosition = new Vector2(event.clientX, event.clientY);
+        }
     }
 
     onMouseUp(event: MouseEvent): void {
-        console.log(event);
+        // console.log(event);
 
         this.mouseDown = false;
 
@@ -40,19 +41,21 @@ export class MouseMonitor extends System implements IMouseHandler {
     onMouseMove(event: MouseEvent): void {
         this.currentPosition.set(event.clientX, event.clientY);
         if (this.mouseDown) {
-            console.log(event.clientX + "," + event.clientY);
+            // console.log(event.clientX + "," + event.clientY);
+            var dv: Vector2 = this.downPosition.vectorTo(this.currentPosition);
+            // console.log(dv);
         }
     }
 
     onMouseEnter(event: MouseEvent): void {
-        console.log(event);
+        // console.log(event);
     }
 
     onMouseLeave(event: MouseEvent): void {
-        console.log(event);
+        // console.log(event);
     }
 
     before(): void {
-        console.log("do something...");
+        // console.log("do something...");
     }
 }
