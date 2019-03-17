@@ -1,4 +1,4 @@
-import { Vector2 } from "../spatial/Vector2";
+import { Vector2 } from "../spatial";
 
 
 export class Vertex {

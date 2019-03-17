@@ -1,5 +1,5 @@
-import { Component } from "../../orion/ents/component";
-import { Vector2 } from "../../orion/spatial/Vector2";
+import { Component } from "../../orion/ents";
+import { Vector2 } from "../../orion/spatial";
 
 
 export  class Physics extends Component {

@@ -1,4 +1,4 @@
-import { Vector2 } from "../../orion/spatial/Vector2";
+import { Vector2 } from "../../orion/spatial";
 import { Component } from "../../orion/ents";
 
 export class RigidBody extends Component {

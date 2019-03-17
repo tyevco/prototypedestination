@@ -1,8 +1,7 @@
 import { Entity } from "../../orion/ents";
 import { Player, Sprite, Physics, RigidBody, Camera } from "../components";
-import { Vector2 } from "../../orion/spatial/Vector2";
-import { Vertex } from "../../orion/drawing/vertex";
-import { Mesh } from "../../orion/drawing/mesh";
+import { Vector2 } from "../../orion/spatial";
+import { Mesh, Vertex } from "../../orion/drawing";
 
 export class EntityCreator {
     public static createPlayer(): Entity {

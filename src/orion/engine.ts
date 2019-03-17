@@ -1,16 +1,19 @@
-import { System } from "./ents/system";
-import { Entity } from "./ents/entity";
-import { IMouseHandler, IKeyboardHandler } from "./lang";
-import { Vector2 } from "./spatial/Vector2";
+import { System, Entity, InputSystem } from "./ents";
+import { IMouseHandler, IKeyboardHandler, MouseDragEvent } from "./input";
+import { Vector2 } from "./spatial";
 
 export class Engine implements IMouseHandler, IKeyboardHandler {
-    entities: Array<Entity> = [];
-    systems: Array<System> = [];
-    steps: number = 0;
-    active: boolean = false;
-    protected mouseDown: boolean = false;
-    protected downPosition: Vector2 = null;
-    protected currentPosition: Vector2 = Vector2.Zero;
+    private entities: Array<Entity> = [];
+    private systems: Array<System> = [];
+    private inputSystems: Array<InputSystem> = [];
+    private steps: number = 0;
+    private active: boolean = false;
+
+    private mouseDown: boolean = false;
+
+    private downPosition: Vector2 = null;
+    private lastPosition: Vector2 = null;
+    private currentPosition: Vector2 = Vector2.Zero;
 
     addEntity(e: Entity): Entity {
         this.entities.push(e);
@@ -33,6 +36,11 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
      */
     addSystem(system: System): Engine {
         this.systems.push(system);
+
+        if (system instanceof InputSystem) {
+            this.inputSystems.push(system as InputSystem);
+        }
+
         return this;
     }
 
@@ -70,7 +78,23 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
     perform(): void {
         for (var system of this.systems) {
             system.before();
-            system.step(this.entities);
+            // get the list of entities for this system
+            if (typeof system.components !== "undefined") {
+                var length: number = this.entities.length;
+                for (var i: number = length - 1; i >= 0; i--) {
+                    var entity: Entity = this.entities[i];
+                    var systemArgs: Array<any> = [entity];
+                    if (system.components.every((componentName: string): boolean => {
+                        if (entity.hasComponent(componentName)) {
+                            systemArgs.push(entity.getComponent(componentName));
+                            return true;
+                        }
+                        return false;
+                    })) {
+                        system.act.apply(system, systemArgs);
+                    }
+                }
+            }
             system.after();
         }
         this.steps++;
@@ -120,12 +144,30 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
     onMouseUp(event: MouseEvent): void {
         this.mouseDown = false;
         this.downPosition = null;
+        this.currentPosition = null;
+        this.lastPosition = null;
     }
 
     onMouseMove(event: MouseEvent): void {
-        this.currentPosition.set(event.clientX, event.clientY);
+        if (this.currentPosition == null) {
+            this.currentPosition = new Vector2(event.clientX, event.clientY);
+        } else {
+            this.currentPosition.set(event.clientX, event.clientY);
+        }
+
         if (this.mouseDown) {
-            var dv: Vector2 = this.downPosition.vectorTo(this.currentPosition);
+            let mouseDragEvent: MouseDragEvent = MouseDragEvent.create(event, this.downPosition, this.currentPosition, this.lastPosition);
+
+            for (let inputSystem of this.inputSystems) {
+
+                inputSystem.onDrag(mouseDragEvent);
+            }
+        }
+
+        if (this.lastPosition == null) {
+            this.lastPosition = new Vector2(event.clientX, event.clientY);
+        } else {
+            this.lastPosition.set(event.clientX, event.clientY);
         }
     }
 

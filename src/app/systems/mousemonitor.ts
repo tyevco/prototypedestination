@@ -1,18 +1,16 @@
-import { System } from "../../orion/ents/system";
-import { CanvasContextHelper } from "../helpers/canvascontext";
-import { IMouseHandler } from "../../orion/lang";
-import { Vector2 } from "../../orion/spatial/Vector2";
+import { InputSystem, usesComponentsBefore } from "../../orion/ents";
+import { Vector2 } from "../../orion/spatial";
+import { MouseDragEvent } from "../../orion/input";
+import { Camera } from "../components";
 
 
-export class MouseMonitor extends System {
+@usesComponentsBefore(Camera.Name)
+export class MouseMonitor extends InputSystem {
     protected mouseDown: boolean = false;
     protected downPosition: Vector2 = null;
     protected currentPosition: Vector2 = Vector2.Zero;
 
-    constructor() {
-        super();
-
-        let canvas: HTMLCanvasElement = CanvasContextHelper.getCanvas();
+    onDrag(dragEvent: MouseDragEvent): void {
+        console.log(dragEvent);
     }
-
 }
