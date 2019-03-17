@@ -1,7 +1,7 @@
 import { System } from "../../lib/ents/system";
 import { CanvasContextHelper } from "../helpers/canvascontext";
 import { IMouseHandler } from "../../lib/lang";
-import { Vector2 } from "../spatial/Vector2";
+import { Vector2 } from "../../lib/spatial/Vector2";
 
 
 export class MouseMonitor extends System implements IMouseHandler {

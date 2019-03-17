@@ -17,7 +17,7 @@ export class SpriteRenderer extends System {
     act(entity: Entity, sprite: Sprite, body: RigidBody): void {
         this.context.moveTo(body.WorldPosition.X, body.WorldPosition.Y);
 
-        for (let vertex of sprite.Vertices) {
+        for (let vertex of sprite.Mesh.Vertices) {
             let x: number = vertex.position.X + body.WorldPosition.X;
             let y: number = vertex.position.Y + body.WorldPosition.Y;
             this.context.lineTo(x, y);

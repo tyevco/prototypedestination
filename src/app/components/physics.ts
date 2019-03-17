@@ -1,5 +1,5 @@
 import { Component } from "../../lib/ents/component";
-import { Vector2 } from "../spatial/Vector2";
+import { Vector2 } from "../../lib/spatial/Vector2";
 
 
 export  class Physics extends Component {

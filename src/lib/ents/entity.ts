@@ -5,7 +5,7 @@ export class Entity {
     private components: { [name: string]: Component } = {};
 
     addComponent(c: Component): Entity {
-        var componentName = c.Name;
+        var componentName: string = c.Name;
 
         if (!this.components[componentName]) {
             this.components[componentName] = c;
@@ -26,7 +26,7 @@ export class Entity {
         } else {
             componentName = name;
         }
-        
+
         if (!!this.components[componentName]) {
             delete this.components[componentName];
             this.dirty = true;

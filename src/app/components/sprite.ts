@@ -1,13 +1,13 @@
-import { Vertex } from "../drawing/vertex";
 import { Component } from "../../lib/ents";
+import { Mesh } from "../../lib/drawing/mesh";
 
 
 export class Sprite extends Component {
-    public Vertices: Array<Vertex> = new Array<Vertex>();
+    public Mesh: Mesh;
 
-    constructor(...vertices: Array<Vertex>) {
+    constructor(mesh: Mesh) {
         super();
-        
-        this.Vertices = vertices;
+
+        this.Mesh = mesh;
     }
 }

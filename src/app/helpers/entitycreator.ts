@@ -1,7 +1,8 @@
 import { Entity } from "../../lib/ents";
 import { Player, Sprite, Physics, RigidBody, Camera } from "../components";
-import { Vector2 } from "../spatial/Vector2";
-import { Vertex } from "../drawing/vertex";
+import { Vector2 } from "../../lib/spatial/Vector2";
+import { Vertex } from "../../lib/drawing/vertex";
+import { Mesh } from "../../lib/drawing/mesh";
 
 export class EntityCreator {
     public static createPlayer(): Entity {
@@ -19,10 +20,12 @@ export class EntityCreator {
         entity.addComponent(rigidBody);
 
         let sprite: Sprite = new Sprite(
-            new Vertex(0, 0),
-            new Vertex(1, 0),
-            new Vertex(1, 1),
-            new Vertex(0, 1)
+            new Mesh(
+                new Vertex(0, 0),
+                new Vertex(1, 0),
+                new Vertex(1, 1),
+                new Vertex(0, 1)
+            )
         );
 
         entity.addComponent(sprite);
