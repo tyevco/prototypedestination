@@ -1,10 +1,10 @@
 import { Engine } from "../orion";
-import { SpriteRenderer, PhysicsEngine, MouseMonitor } from "./systems";
-import { EntityCreator } from "./helpers/entitycreator";
 import { CanvasContextHelper } from "./helpers/canvascontext";
+import { EntityCreator } from "./helpers/entitycreator";
+import { MouseMonitor, PhysicsEngine, SpriteRenderer } from "./systems";
 
 export class Game {
-    engine: Engine;
+    private engine: Engine;
 
     constructor() {
         this.engine = new Engine();
@@ -13,16 +13,15 @@ export class Game {
         this.engine.registerKeyboardEventHandlers(CanvasContextHelper.getCanvas());
     }
 
-    initialize(): void {
+    public initialize(): void {
         this.engine.addSystem(new SpriteRenderer());
         this.engine.addSystem(new PhysicsEngine());
         this.engine.addSystem(new MouseMonitor());
 
-
         this.engine.addEntity(EntityCreator.createPlayer());
     }
 
-    begin(): void {
+    public begin(): void {
         this.engine.run(50);
     }
 }

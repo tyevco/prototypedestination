@@ -1,4 +1,4 @@
-import { DecisionNode } from "./node";
+import { DecisionNode } from "./decisionnode";
 
 export abstract class Decorator extends DecisionNode {
     public Child: DecisionNode;
@@ -9,6 +9,5 @@ export abstract class Decorator extends DecisionNode {
         return this;
     }
 
-    protected OnReset(): void {
-    }
+    protected OnReset(): void { /**/ }
 }

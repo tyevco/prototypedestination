@@ -1,4 +1,3 @@
 
-
-export * from "./sealed";
 export * from "./icloneable";
+export * from "./sealed";

@@ -1,10 +1,9 @@
 import { Vector2 } from "../spatial";
 import { sealed } from "../lang";
 
-
 @sealed
 export class MouseDragEvent {
-    static create(event: MouseEvent, start: Vector2, current: Vector2, previous: Vector2): MouseDragEvent {
+    public static create(event: MouseEvent, start: Vector2, current: Vector2, previous: Vector2): MouseDragEvent {
         return new MouseDragEvent(determineMouseButton(event), start, current, previous);
     }
 
@@ -35,7 +34,7 @@ export class MouseDragEvent {
 export enum MouseButton {
     Left,
     Middle,
-    Right
+    Right,
 }
 
 function determineMouseButton(event: MouseEvent): MouseButton {

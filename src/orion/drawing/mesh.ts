@@ -4,7 +4,7 @@ export class Mesh {
     public Vertices: Array<Vertex> = new Array<Vertex>();
     public Color: string = "black";
 
-    constructor(...vertices: Vertex[]) {
+    constructor(...vertices: Array<Vertex>) {
         this.Vertices = vertices;
     }
 }

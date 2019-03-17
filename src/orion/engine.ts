@@ -1,5 +1,5 @@
-import { System, Entity, InputSystem } from "./ents";
-import { IMouseHandler, IKeyboardHandler, MouseDragEvent } from "./input";
+import { Entity, InputSystem, System } from "./ents";
+import { IKeyboardHandler, IMouseHandler, MouseDragEvent } from "./input";
 import { Vector2 } from "./spatial";
 
 export class Engine implements IMouseHandler, IKeyboardHandler {
@@ -16,9 +16,9 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
         return match;
     }
 
-    private entities: Array<Entity> = [];
-    private systems: Array<System> = [];
-    private inputSystems: Array<InputSystem> = [];
+    private entities: Array<Entity> = new Array<Entity>();
+    private systems: Array<System> = new Array<System>();
+    private inputSystems: Array<InputSystem> = new Array<InputSystem>();
     private steps: number = 0;
     private active: boolean = false;
 
@@ -38,7 +38,7 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
      * Creates an Entity to the engine.
      */
     public createEntity(): Entity {
-        var entity: Entity = new Entity();
+        const entity: Entity = new Entity();
         this.entities.push(entity);
 
         return entity;
@@ -61,7 +61,7 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
      * Runs the engine at a specified interval until maxSteps is reached.
      */
     public run(interval: number, maxSteps: number = 0): void {
-        var self: Engine = this;
+        const self: Engine = this;
 
         if (maxSteps === null || maxSteps === undefined) {
             maxSteps = 0;

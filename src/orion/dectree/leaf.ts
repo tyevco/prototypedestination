@@ -1,6 +1,4 @@
-import { DecisionNode } from "./node";
+import { DecisionNode } from "./decisionnode";
 
-
-	export abstract class Leaf extends DecisionNode
-	{
-	}
+export abstract class Leaf extends DecisionNode {
+}

@@ -1,6 +1,6 @@
-import { Status } from "./status";
-import { BehaviorContext } from "./behaviorcontext";
 
+import { BehaviorContext } from "./behaviorcontext";
+import { Status } from "./status";
 
 export abstract class DecisionNode {
     public Name: string;
@@ -9,13 +9,14 @@ export abstract class DecisionNode {
     protected starting: boolean = true;
 
     public Process(context: BehaviorContext): Status {
-        let ret: Status = this.OnProcess(context);
+        const ret: Status = this.OnProcess(context);
 
         this.Ticks++;
         this.starting = false;
 
-        if (ret != Status.Running)
+        if (ret !== Status.Running) {
             this.Reset();
+        }
 
         return ret;
     }
