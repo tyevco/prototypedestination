@@ -1,4 +1,4 @@
-import { Component } from "../../lib/ents/component";
+import { Component } from "../../orion/ents/component";
 
 export class MouseControlled extends Component {
 

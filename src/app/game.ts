@@ -1,4 +1,4 @@
-import { Engine, System, Component } from "../lib/ents";
+import { Engine } from "../orion";
 import { SpriteRenderer, PhysicsEngine, MouseMonitor } from "./systems";
 import { EntityCreator } from "./helpers/entitycreator";
 import { CanvasContextHelper } from "./helpers/canvascontext";

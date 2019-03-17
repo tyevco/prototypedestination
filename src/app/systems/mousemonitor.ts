@@ -1,7 +1,7 @@
-import { System } from "../../lib/ents/system";
+import { System } from "../../orion/ents/system";
 import { CanvasContextHelper } from "../helpers/canvascontext";
-import { IMouseHandler } from "../../lib/lang";
-import { Vector2 } from "../../lib/spatial/Vector2";
+import { IMouseHandler } from "../../orion/lang";
+import { Vector2 } from "../../orion/spatial/Vector2";
 
 
 export class MouseMonitor extends System {

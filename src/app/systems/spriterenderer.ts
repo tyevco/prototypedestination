@@ -1,6 +1,6 @@
-import { System, usesComponents, usesComponentsBefore } from "../../lib/ents/system";
+import { System, usesComponents, usesComponentsBefore } from "../../orion/ents/system";
 import { CanvasContextHelper } from "../helpers/canvascontext";
-import { Entity } from "../../lib/ents";
+import { Entity } from "../../orion/ents";
 import { Sprite, RigidBody, Camera } from "../components";
 
 @usesComponentsBefore(Camera.Name)

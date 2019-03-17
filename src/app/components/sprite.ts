@@ -1,5 +1,5 @@
-import { Component } from "../../lib/ents";
-import { Mesh } from "../../lib/drawing/mesh";
+import { Component } from "../../orion/ents";
+import { Mesh } from "../../orion/drawing/mesh";
 
 
 export class Sprite extends Component {

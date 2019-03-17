@@ -1,4 +1,4 @@
-import { ICloneable } from "../../lib/lang";
+import { ICloneable } from "../../orion/lang";
 
 export class Vector2 implements ICloneable<Vector2> {
     private x: number = 0;

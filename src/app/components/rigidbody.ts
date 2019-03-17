@@ -1,5 +1,5 @@
-import { Vector2 } from "../../lib/spatial/Vector2";
-import { Component } from "../../lib/ents";
+import { Vector2 } from "../../orion/spatial/Vector2";
+import { Component } from "../../orion/ents";
 
 export class RigidBody extends Component {
     public Rotation: number;
