@@ -1,23 +1,22 @@
+import { sealed } from "../../lang";
+import { BehaviorContext } from "../behaviorcontext";
 import { Composite } from "../composite";
 import { Status } from "../status";
-import { BehaviorContext } from "../behaviorcontext";
 
-//@sealed
+@sealed
 export class Sequence extends Composite {
     private currentNode: number = 0;
 
     protected OnProcess(context: BehaviorContext): Status {
-        let ret: Status = this.Nodes[this.currentNode].Process(context);
+        const ret: Status = this.Nodes[this.currentNode].Process(context);
 
-        if (ret == Status.Failure) {
+        if (ret === Status.Failure) {
             return Status.Failure;
-        }
-        else if (ret == Status.Success) {
+        } else if (ret === Status.Success) {
             this.currentNode++;
             if (this.currentNode >= this.Nodes.length) {
                 return Status.Success;
-            }
-            else {
+            } else {
                 return this.OnProcess(context);
             }
         }
@@ -27,9 +26,8 @@ export class Sequence extends Composite {
 
     protected OnReset(): void {
         this.currentNode = 0;
-        for (var node of this.Nodes) {
+        for (const node of this.Nodes) {
             node.Reset();
         }
     }
 }
-

@@ -1,6 +1,5 @@
+import { Mesh } from "../../orion/drawing";
 import { Component } from "../../orion/ents";
-import { Mesh } from "../../orion/drawing/mesh";
-
 
 export class Sprite extends Component {
     public Mesh: Mesh;

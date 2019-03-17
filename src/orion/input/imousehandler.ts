@@ -1,5 +1,3 @@
-
-
 export interface IMouseHandler {
     onMouseDown(event: MouseEvent): void;
     onMouseUp(event: MouseEvent): void;

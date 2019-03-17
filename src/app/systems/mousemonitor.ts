@@ -1,8 +1,7 @@
 import { InputSystem, usesComponentsBefore } from "../../orion/ents";
-import { Vector2 } from "../../orion/spatial";
 import { MouseDragEvent } from "../../orion/input";
+import { Vector2 } from "../../orion/spatial";
 import { Camera } from "../components";
-
 
 @usesComponentsBefore(Camera.Name)
 export class MouseMonitor extends InputSystem {

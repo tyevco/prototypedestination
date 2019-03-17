@@ -5,7 +5,7 @@
     ],
     "jsRules": {},
     "rules": {
-        "array-type": [true, "generic"]
+        "array-type": [true, "generic"],
     },
     "rulesDirectory": []
 }

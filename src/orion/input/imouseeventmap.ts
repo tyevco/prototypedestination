@@ -1,5 +1,4 @@
 
-
 interface IMouseEventMap {
     "click": MouseEvent;
     "contextmenu": MouseEvent;

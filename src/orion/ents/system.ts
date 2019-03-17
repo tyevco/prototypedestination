@@ -51,7 +51,7 @@ function calculateComponentsRegister(...componentNames: Array<string>): number {
     return register;
 }
 
-export function usesComponentsBefore<T extends { new(...args: any[]): System }>(...componentNames: Array<string>) {
+export function usesComponentsBefore<T extends { new(...args: Array<any>): System }>(...componentNames: Array<string>) {
     return (constructor: T) => {
         Object.assign(constructor.prototype, {
             beforeComponentRegister: calculateComponentsRegister(...componentNames),
@@ -60,16 +60,16 @@ export function usesComponentsBefore<T extends { new(...args: any[]): System }>(
     };
 }
 
-export function usesComponents<T extends { new(...args: any[]): System }>(...componentNames: Array<string>) {
+export function usesComponents<T extends { new(...args: Array<any>): System }>(...componentNames: Array<string>) {
     return (constructor: T) => {
         Object.assign(constructor.prototype, {
             componentRegister: calculateComponentsRegister(...componentNames),
             components: componentNames,
         });
     };
-};
+}
 
-export function usesComponentsAfter<T extends { new(...args: any[]): System }>(...componentNames: Array<string>) {
+export function usesComponentsAfter<T extends { new(...args: Array<any>): System }>(...componentNames: Array<string>) {
     return (constructor: T) => {
         Object.assign(constructor.prototype, {
             afterComponentRegister: calculateComponentsRegister(...componentNames),
