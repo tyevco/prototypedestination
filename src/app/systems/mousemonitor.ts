@@ -10,7 +10,7 @@ export class MouseMonitor extends InputSystem {
     protected downPosition: Vector2 = null;
     protected currentPosition: Vector2 = Vector2.Zero;
 
-    onDrag(dragEvent: MouseDragEvent): void {
+    public onDrag(dragEvent: MouseDragEvent): void {
         console.log(dragEvent);
     }
 }

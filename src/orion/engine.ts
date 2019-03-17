@@ -15,7 +15,7 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
     private lastPosition: Vector2 = null;
     private currentPosition: Vector2 = Vector2.Zero;
 
-    addEntity(e: Entity): Entity {
+    public addEntity(e: Entity): Entity {
         this.entities.push(e);
 
         return e;
@@ -24,7 +24,7 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
     /**
      * Creates an Entity to the engine.
      */
-    createEntity(): Entity {
+    public createEntity(): Entity {
         var entity: Entity = new Entity();
         this.entities.push(entity);
 
@@ -34,7 +34,7 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
     /***
      * Adds a System to the engine.
      */
-    addSystem(system: System): Engine {
+    public addSystem(system: System): Engine {
         this.systems.push(system);
 
         if (system instanceof InputSystem) {
@@ -47,7 +47,7 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
     /***
      * Runs the engine at a specified interval until maxSteps is reached.
      */
-    run(interval: number, maxSteps: number = 0): void {
+    public run(interval: number, maxSteps: number = 0): void {
         var self: Engine = this;
 
         if (maxSteps === null || maxSteps === undefined) {
@@ -58,7 +58,7 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
             this.onStart();
         }
 
-        var stepFn: () => void = () => {
+        const stepFn: () => void = () => {
             self.perform();
             if ((self.steps < maxSteps && maxSteps !== 0) || maxSteps === 0) {
                 setTimeout(stepFn, interval);
@@ -75,16 +75,16 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
     /***
      * Performs a single step of the engine.
      */
-    perform(): void {
-        for (var system of this.systems) {
+    public perform(): void {
+        for (const system of this.systems) {
             system.before();
             // get the list of entities for this system
-            if (typeof system.components !== "undefined") {
-                var length: number = this.entities.length;
-                for (var i: number = length - 1; i >= 0; i--) {
-                    var entity: Entity = this.entities[i];
-                    var systemArgs: Array<any> = [entity];
-                    if (system.components.every((componentName: string): boolean => {
+            if (typeof system.Components !== "undefined") {
+                const length: number = this.entities.length;
+                for (let i: number = length - 1; i >= 0; i--) {
+                    const entity: Entity = this.entities[i];
+                    const systemArgs: Array<any> = [entity];
+                    if (system.Components.every((componentName: string): boolean => {
                         if (entity.hasComponent(componentName)) {
                             systemArgs.push(entity.getComponent(componentName));
                             return true;
@@ -100,32 +100,18 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
         this.steps++;
     }
 
-    start(): void {
+    public start(): void {
         // todo: start running engine
         // console.log("start");
     }
 
-    /***
-     * onStart Hook.
-     */
-    onStart(): void {
-        // console.log("onStart");
-    }
-
-    stop(): void {
+    public stop(): void {
         // todo: stop running engine
         // console.log("stop");
     }
 
-    /***
-     * onStop Hook
-     */
-    onStop(): void {
-        // console.log("onStop");
-    }
-
     /* Mouse Event Handlers */
-    registerMouseEventHandlers(mouseEmitter: IMouseEventEmitter): void {
+    public registerMouseEventHandlers(mouseEmitter: IMouseEventEmitter): void {
         mouseEmitter.addEventListener("mousedown", (e: MouseEvent) => this.onMouseDown(e), false);
         mouseEmitter.addEventListener("mouseup", (e: MouseEvent) => this.onMouseUp(e), false);
         mouseEmitter.addEventListener("mousemove", (e: MouseEvent) => this.onMouseMove(e), false);
@@ -133,7 +119,7 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
         mouseEmitter.addEventListener("mouseleave", (e: MouseEvent) => this.onMouseLeave(e), false);
     }
 
-    onMouseDown(event: MouseEvent): void {
+    public onMouseDown(event: MouseEvent): void {
         if (!this.mouseDown) {
             this.mouseDown = true;
             // transform clientX/Y to worldX/Y.
@@ -141,14 +127,14 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
         }
     }
 
-    onMouseUp(event: MouseEvent): void {
+    public onMouseUp(event: MouseEvent): void {
         this.mouseDown = false;
         this.downPosition = null;
         this.currentPosition = null;
         this.lastPosition = null;
     }
 
-    onMouseMove(event: MouseEvent): void {
+    public onMouseMove(event: MouseEvent): void {
         if (this.currentPosition == null) {
             this.currentPosition = new Vector2(event.clientX, event.clientY);
         } else {
@@ -156,9 +142,10 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
         }
 
         if (this.mouseDown) {
-            let mouseDragEvent: MouseDragEvent = MouseDragEvent.create(event, this.downPosition, this.currentPosition, this.lastPosition);
+            const mouseDragEvent: MouseDragEvent = MouseDragEvent.create(
+                event, this.downPosition, this.currentPosition, this.lastPosition);
 
-            for (let inputSystem of this.inputSystems) {
+            for (const inputSystem of this.inputSystems) {
 
                 inputSystem.onDrag(mouseDragEvent);
             }
@@ -171,30 +158,44 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
         }
     }
 
-    onMouseEnter(event: MouseEvent): void {
+    public onMouseEnter(event: MouseEvent): void {
         // console.log("NYI");
     }
 
-    onMouseLeave(event: MouseEvent): void {
+    public onMouseLeave(event: MouseEvent): void {
         // console.log("NYI");
     }
 
     /* Keyboard Event Handlers */
-    registerKeyboardEventHandlers(keyboardEmitter: IKeyboardEventEmitter): void {
+    public registerKeyboardEventHandlers(keyboardEmitter: IKeyboardEventEmitter): void {
         keyboardEmitter.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e), false);
         keyboardEmitter.addEventListener("keyup", (e: KeyboardEvent) => this.onKeyUp(e), false);
         keyboardEmitter.addEventListener("keypress", (e: KeyboardEvent) => this.onKeyPress(e), false);
     }
 
-    onKeyDown(event: KeyboardEvent): void {
+    public onKeyDown(event: KeyboardEvent): void {
         // console.log("NYI");
     }
 
-    onKeyUp(event: KeyboardEvent): void {
+    public onKeyUp(event: KeyboardEvent): void {
         // console.log("NYI");
     }
 
-    onKeyPress(event: KeyboardEvent): void {
+    public onKeyPress(event: KeyboardEvent): void {
         // console.log("NYI");
+    }
+
+    /***
+     * onStart Hook.
+     */
+    protected onStart(): void {
+        // console.log("onStart");
+    }
+
+    /***
+     * onStop Hook
+     */
+    protected onStop(): void {
+        // console.log("onStop");
     }
 }

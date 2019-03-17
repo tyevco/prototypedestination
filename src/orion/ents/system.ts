@@ -1,25 +1,42 @@
 import { Component } from "./component";
 import ComponentRegistry from "./componentregistry";
 import { Entity } from "./entity";
-import { MouseDragEvent } from "../input";
 
 export abstract class System {
-    components: Array<string>;
-    afterComponents: Array<string>;
-    beforeComponents: Array<string>;
+    protected componentRegister: number;
+    protected components: Array<string>;
+    protected afterComponentRegister: number;
+    protected afterComponents: Array<string>;
+    protected beforeComponentRegister: number;
+    protected beforeComponents: Array<string>;
 
-    before(): void { /**/ }
-    act(entity: Entity, ...components: Array<Component>): void { /**/ }
-    after(): void { /**/ }
-}
+    public get AfterComponentRegister(): number {
+        return this.afterComponentRegister;
+    }
 
-export abstract class InputSystem extends System {
-    onClick(): void { /**/ }
-    onDrag(mouseDragEvent: MouseDragEvent): void { /**/ }
-    onKeyPress(): void { /**/ }
-    onKeyUp(): void { /**/ }
-    onKeyDown(): void { /**/ }
-    onButtonPress(): void { /**/ }
+    public get AfterComponents(): Array<string> {
+        return this.afterComponents;
+    }
+
+    public get ComponentRegister(): number {
+        return this.componentRegister;
+    }
+
+    public get Components(): Array<string> {
+        return this.components;
+    }
+
+    public get BeforeComponentRegister(): number {
+        return this.beforeComponentRegister;
+    }
+
+    public get BeforeComponents(): Array<string> {
+        return this.beforeComponents;
+    }
+
+    public before(): void { /**/ }
+    public act(entity: Entity, ...components: Array<Component>): void { /**/ }
+    public after(): void { /**/ }
 }
 
 function calculateComponentsRegister(...componentNames: Array<string>): number {
@@ -44,8 +61,6 @@ export function usesComponentsBefore<T extends { new(...args: any[]): System }>(
 }
 
 export function usesComponents<T extends { new(...args: any[]): System }>(...componentNames: Array<string>) {
-
-
     return (constructor: T) => {
         Object.assign(constructor.prototype, {
             componentRegister: calculateComponentsRegister(...componentNames),
