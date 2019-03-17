@@ -1,7 +1,7 @@
-import { System } from "./system";
-import { Entity } from "./entity";
-import { IMouseHandler, IKeyboardHandler } from "../lang";
-import { Vector2 } from "../spatial/Vector2";
+import { System } from "./ents/system";
+import { Entity } from "./ents/entity";
+import { IMouseHandler, IKeyboardHandler } from "./lang";
+import { Vector2 } from "./spatial/Vector2";
 
 export class Engine implements IMouseHandler, IKeyboardHandler {
     entities: Array<Entity> = [];
