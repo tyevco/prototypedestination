@@ -1,6 +1,7 @@
 import { Engine, System, Component } from "../lib/ents";
 import { SpriteRenderer, PhysicsEngine, MouseMonitor } from "./systems";
 import { EntityCreator } from "./helpers/entitycreator";
+import { CanvasContextHelper } from "./helpers/canvascontext";
 
 export class Game {
     engine: Engine;
@@ -8,7 +9,8 @@ export class Game {
     constructor() {
         this.engine = new Engine();
 
-
+        this.engine.registerMouseEventHandlers(CanvasContextHelper.getCanvas());
+        this.engine.registerKeyboardEventHandlers(CanvasContextHelper.getCanvas());
     }
 
     initialize(): void {
