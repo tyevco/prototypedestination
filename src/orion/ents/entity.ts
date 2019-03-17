@@ -1,5 +1,5 @@
 import { Component } from "./component";
-import ComponentRegistry from "./ComponentRegistry";
+import ComponentRegistry from "./componentregistry";
 
 export class Entity {
     private dirty: boolean = false;
