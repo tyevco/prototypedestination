@@ -1,4 +1,5 @@
 import { Component } from "./component";
+import ComponentRegistry from "./componentregistry";
 import { Entity } from "./entity";
 import { MouseDragEvent } from "../input";
 
@@ -21,21 +22,43 @@ export abstract class InputSystem extends System {
     onButtonPress(): void { /**/ }
 }
 
+function calculateComponentsRegister(...componentNames: Array<string>): number {
+    let register: number = 0;
+    /* tslint:disable:no-bitwise*/
+    for (const name of componentNames) {
+        const entry: number = ComponentRegistry.registerComponent(name);
+        register = register | entry;
+    }
+    /* tslint:enable:no-bitwise*/
+
+    return register;
+}
 
 export function usesComponentsBefore<T extends { new(...args: any[]): System }>(...componentNames: Array<string>) {
-    return function (constructor: T) {
-        Object.assign(constructor.prototype, { beforeComponents: componentNames });
+    return (constructor: T) => {
+        Object.assign(constructor.prototype, {
+            beforeComponentRegister: calculateComponentsRegister(...componentNames),
+            beforeComponents: componentNames,
+        });
     };
 }
 
 export function usesComponents<T extends { new(...args: any[]): System }>(...componentNames: Array<string>) {
-    return function (constructor: T) {
-        Object.assign(constructor.prototype, { components: componentNames });
+
+
+    return (constructor: T) => {
+        Object.assign(constructor.prototype, {
+            componentRegister: calculateComponentsRegister(...componentNames),
+            components: componentNames,
+        });
     };
 };
 
 export function usesComponentsAfter<T extends { new(...args: any[]): System }>(...componentNames: Array<string>) {
-    return function (constructor: T) {
-        Object.assign(constructor.prototype, { afterComponents: componentNames });
+    return (constructor: T) => {
+        Object.assign(constructor.prototype, {
+            afterComponentRegister: calculateComponentsRegister(...componentNames),
+            afterComponents: componentNames,
+        });
     };
 }
