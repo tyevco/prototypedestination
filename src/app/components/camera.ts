@@ -3,5 +3,9 @@ import { Vector2 } from "../../orion/spatial";
 
 
 export class Camera extends Component {
-    public position: Vector2;
+    public Position: Vector2;
+
+    public Draggable: boolean;
+
+    
 }

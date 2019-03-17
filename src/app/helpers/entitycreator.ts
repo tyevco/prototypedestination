@@ -1,5 +1,5 @@
 import { Entity } from "../../orion/ents";
-import { Player, Sprite, Physics, RigidBody, Camera } from "../components";
+import { Selectable, Sprite, Physics, RigidBody, Camera } from "../components";
 import { Vector2 } from "../../orion/spatial";
 import { Mesh, Vertex } from "../../orion/drawing";
 
@@ -7,7 +7,7 @@ export class EntityCreator {
     public static createPlayer(): Entity {
         let entity: Entity = new Entity();
 
-        entity.addComponent(new Player());
+        entity.addComponent(new Selectable());
 
         let physics: Physics = new Physics();
         physics.Velocity = new Vector2(0, 0);
