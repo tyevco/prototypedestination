@@ -3,6 +3,19 @@ import { IMouseHandler, IKeyboardHandler, MouseDragEvent } from "./input";
 import { Vector2 } from "./spatial";
 
 export class Engine implements IMouseHandler, IKeyboardHandler {
+
+    private static doRegistersMatch(first: number, second: number): boolean {
+        let match: boolean = false;
+
+        /* tslint:disable:no-bitwise*/
+        if ((first & second) === first) {
+            match = true;
+        }
+        /* tslint:enable:no-bitwise*/
+
+        return match;
+    }
+
     private entities: Array<Entity> = [];
     private systems: Array<System> = [];
     private inputSystems: Array<InputSystem> = [];
@@ -76,21 +89,22 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
      * Performs a single step of the engine.
      */
     public perform(): void {
+        for (const entity of this.entities) {
+            if (entity.isDirty()) {
+                entity.updateRegistry();
+            }
+        }
+
         for (const system of this.systems) {
             system.before();
             // get the list of entities for this system
-            if (typeof system.Components !== "undefined") {
+            if (typeof system.Components !== "undefined" && system.ComponentRegister > 0) {
                 const length: number = this.entities.length;
                 for (let i: number = length - 1; i >= 0; i--) {
                     const entity: Entity = this.entities[i];
-                    const systemArgs: Array<any> = [entity];
-                    if (system.Components.every((componentName: string): boolean => {
-                        if (entity.hasComponent(componentName)) {
-                            systemArgs.push(entity.getComponent(componentName));
-                            return true;
-                        }
-                        return false;
-                    })) {
+                    if (Engine.doRegistersMatch(system.ComponentRegister, entity.ComponentRegister)) {
+                        const systemArgs: Array<any> = [entity];
+                        systemArgs.push(...entity.getComponents(...system.Components));
                         system.act.apply(system, systemArgs);
                     }
                 }

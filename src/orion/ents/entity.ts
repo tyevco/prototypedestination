@@ -6,6 +6,10 @@ export class Entity {
     private components: Map<string, Component> = new Map<string, Component>();
     private componentRegister: number = 0;
 
+    public get ComponentRegister(): number {
+        return this.componentRegister;
+    }
+
     public addComponent(c: Component): Entity {
         const componentName: string = c.Name;
 
@@ -19,6 +23,16 @@ export class Entity {
 
     public getComponent(name: string): Component {
         return this.components.get(name);
+    }
+
+    public getComponents(...names: Array<string>): Array<Component> {
+        const components: Array<Component> = new Array<Component>();
+
+        for (const name of names) {
+            components.push(this.getComponent(name));
+        }
+
+        return components;
     }
 
     public removeComponent(name: string | Component): Entity {
@@ -54,5 +68,7 @@ export class Entity {
         /* tslint:enable:no-bitwise*/
 
         this.componentRegister = register;
+
+        this.dirty = false;
     }
 }
