@@ -2,7 +2,7 @@
 import { Mesh, Vertex } from "../../orion/drawing";
 import { Entity } from "../../orion/ents";
 import { Vector2 } from "../../orion/spatial";
-import { Camera, Physics, RigidBody, Selectable, Sprite } from "../components";
+import { Camera, Physics, RigidBody, Selectable, Sprite, UnitType } from "../components";
 
 export class EntityCreator {
     public static createPlayer(): Entity {
@@ -35,7 +35,12 @@ export class EntityCreator {
     public createCamera(): Entity {
         const entity: Entity = new Entity();
 
-        entity.addComponent(new Camera());
+        const camera: Camera = new Camera();
+        camera.WorldPosition = new Vector2(0, 0);
+        camera.ScreenPosition = new Vector2(0, 0);
+        camera.ViewportSize = new Vector2(100, 100);
+        camera.ViewportUnits = UnitType.Percent;
+        entity.addComponent(camera);
 
         return entity;
     }
