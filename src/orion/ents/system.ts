@@ -1,4 +1,3 @@
-import { Component } from "./component";
 import ComponentRegistry from "./componentregistry";
 import { Entity } from "./entity";
 
@@ -35,7 +34,7 @@ export abstract class System {
     }
 
     public before(): void { /**/ }
-    public act(entity: Entity, ...components: Array<Component>): void { /**/ }
+    public act(entity: Entity, ...components: Array<any>): void { /**/ }
     public after(): void { /**/ }
 }
 

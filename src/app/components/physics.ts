@@ -1,6 +1,7 @@
-import { Component } from "../../orion/ents";
+import { component } from "../../orion/ents";
 import { Vector2 } from "../../orion/spatial";
 
-export  class Physics extends Component {
+@component
+export  class Physics {
     public Velocity: Vector2;
 }

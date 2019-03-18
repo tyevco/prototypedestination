@@ -1,7 +1,8 @@
-import { Component, Entity } from "../../orion/ents";
+import { component, Entity } from "../../orion/ents";
 import { Vector2 } from "../../orion/spatial";
 
-export class Camera extends Component {
+@component
+export class Camera {
     public WorldPosition: Vector2;
     public ScreenPosition: Vector2;
 

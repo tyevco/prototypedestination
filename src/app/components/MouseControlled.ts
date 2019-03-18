@@ -1,5 +1,6 @@
-import { Component } from "../../orion/ents/component";
+import { component } from "../../orion/ents/component";
 
-export class MouseControlled extends Component {
+@component
+export class MouseControlled {
 
 }

@@ -1,16 +1,15 @@
-import { Component } from "./component";
 import ComponentRegistry from "./componentregistry";
 
 export class Entity {
     private dirty: boolean = false;
-    private components: Map<string, Component> = new Map<string, Component>();
+    private components: Map<string, any> = new Map<string, any>();
     private componentRegister: number = 0;
 
     public get ComponentRegister(): number {
         return this.componentRegister;
     }
 
-    public addComponent(c: Component): Entity {
+    public addComponent(c: any): Entity {
         const componentName: string = c.name;
 
         if (!this.hasComponent(componentName)) {
@@ -21,12 +20,12 @@ export class Entity {
         return this;
     }
 
-    public getComponent(component: Function): Component {
+    public getComponent(component: Function): any {
         return this.components.get(component.name);
     }
 
-    public getComponents(...components: Array<Function>): Array<Component> {
-        const componentList: Array<Component> = new Array<Component>();
+    public getComponents(...components: Array<Function>): Array<any> {
+        const componentList: Array<any> = new Array<any>();
 
         for (const component of components) {
             componentList.push(this.getComponent(component));
@@ -35,10 +34,10 @@ export class Entity {
         return componentList;
     }
 
-    public removeComponent(name: string | Component): Entity {
+    public removeComponent(name: string | any): Entity {
         let componentName: string;
         if (typeof name !== "string") {
-            componentName = (name as Component).name;
+            componentName = (name as any).name;
         } else {
             componentName = name;
         }
@@ -50,10 +49,10 @@ export class Entity {
         return this;
     }
 
-    public hasComponent(name: string | Function): boolean {
+    public hasComponent(name: string | any): boolean {
         let componentName: string;
         if (typeof name !== "string") {
-            componentName = (name as Component).name;
+            componentName = (name as any).name;
         } else {
             componentName = name;
         }

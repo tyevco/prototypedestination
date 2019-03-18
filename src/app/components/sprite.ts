@@ -1,12 +1,11 @@
 import { Mesh } from "../../orion/drawing";
-import { Component } from "../../orion/ents";
+import { component } from "../../orion/ents";
 
-export class Sprite extends Component {
+@component
+export class Sprite {
     public Mesh: Mesh;
 
     constructor(mesh: Mesh) {
-        super();
-
         this.Mesh = mesh;
     }
 }

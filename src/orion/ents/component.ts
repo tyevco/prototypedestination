@@ -1,6 +1,8 @@
+import ComponentRegistry from "./componentregistry";
 
-export class Component {
-    public get name(): string {
-        return (this as any).constructor.name;
-    }
+export function component(constructor: Function) {
+    Object.assign(constructor.prototype, {
+        name: constructor.name,
+        register: ComponentRegistry.registerComponent(constructor.name),
+    });
 }

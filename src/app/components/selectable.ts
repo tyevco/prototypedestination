@@ -1,5 +1,6 @@
-import { Component } from "../../orion/ents";
+import { component } from "../../orion/ents";
 
-export class Selectable extends Component {
+@component
+export class Selectable {
 
 }
