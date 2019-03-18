@@ -18,7 +18,7 @@ export class MouseDragEvent {
     public readonly Button: MouseButton;
 
     private constructor(button: MouseButton, start: Vector2, current: Vector2, lastTriggered: Vector2) {
-        this.Offset = start;
+        this.StartPosition = start;
         this.Position = current;
 
         this.Offset = start.vectorTo(current);
