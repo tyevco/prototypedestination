@@ -11,10 +11,9 @@ export class EntityCreator {
             this.createRigidBodyComponent(0, 0),
             this.createTransformComponent(0, 0),
             this.createSpriteComponent(new Mesh(
-                new Vertex(0, 0),
-                new Vertex(1, 0),
-                new Vertex(1, 1),
-                new Vertex(0, 1),
+                new Vertex(15, 0),
+                new Vertex(30, 30),
+                new Vertex(0, 30),
             )));
     }
 
