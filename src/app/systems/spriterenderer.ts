@@ -21,6 +21,11 @@ export class SpriteRenderer extends System {
         for (const camera of entities.filter(e => e.match(this.getRegister("worldCameras")))) {
             this.generateCameraDetails(camera);
         }
+
+        for (const camera of this.cameras) {
+            this.context.clearRect(camera.ScreenPosition.Left, camera.ScreenPosition.Top,
+                camera.ScreenPosition.Width, camera.ScreenPosition.Height);
+        }
     }
 
     private generateCameraDetails(entity: Entity): void {
