@@ -6,37 +6,38 @@ import { Camera, RigidBody, Selectable, Sprite, UnitType, Transform, ScreenEleme
 
 export class EntityCreator {
     public static createPlayer(): Entity {
-        const entity: Entity = new Entity();
-
-        const sprite: Sprite = new Sprite(
-            new Mesh(
+        return Entity.create(
+            this.createSelectableComponent(),
+            this.createRigidBodyComponent(0, 0),
+            this.createTransformComponent(0, 0),
+            this.createSpriteComponent(new Mesh(
                 new Vertex(0, 0),
                 new Vertex(1, 0),
                 new Vertex(1, 1),
                 new Vertex(0, 1),
-            ),
-        );
-
-        entity
-            .addComponent(new Selectable())
-            .addComponent(this.createRigidBodyComponent(0, 0))
-            .addComponent(this.createTransformComponent(0, 0))
-            .addComponent(sprite);
-
-        return entity;
+            )));
     }
 
     public static createCamera(): Entity {
-        const entity: Entity = new Entity();
+        return Entity.create(
+            this.createCameraComponent(),
+            this.createTransformComponent(0, 0),
+            this.createScreenElementComponent(0, 0, 100, 100, UnitType.Percent));
+    }
 
+    private static createSelectableComponent(): Selectable {
+        return new Selectable();
+    }
+
+    private static createSpriteComponent(mesh: Mesh): Sprite {
+        const sprite: Sprite = new Sprite(mesh);
+
+        return sprite;
+    }
+
+    private static createCameraComponent(): Camera {
         const camera: Camera = new Camera();
-
-        entity
-            .addComponent(camera)
-            .addComponent(this.createTransformComponent(0, 0))
-            .addComponent(this.createScreenElementComponent(0, 0, 100, 100, UnitType.Percent));
-
-        return entity;
+        return camera;
     }
 
     private static createRigidBodyComponent(dx: number, dy: number): RigidBody {

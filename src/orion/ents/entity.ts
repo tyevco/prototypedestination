@@ -1,6 +1,19 @@
 import ComponentRegistry from "./componentregistry";
 
 export class Entity {
+    public static create(...components: Array<any>): Entity {
+        return new Entity()
+            .addComponents(...components)
+            .updateRegistry();
+    }
+
+    private static idCounter: number = 0;
+
+    private constructor() {
+        this.id = Entity.idCounter++;
+    }
+
+    public readonly id: number;
     private dirty: boolean = false;
     private components: Map<string, any> = new Map<string, any>();
     private componentRegister: number = 0;
@@ -9,12 +22,20 @@ export class Entity {
         return this.componentRegister;
     }
 
-    public addComponent(c: any): Entity {
-        const componentName: string = c.name;
+    public addComponent(component: any): Entity {
+        const componentName: string = component.name;
 
         if (!this.hasComponent(componentName)) {
-            this.components.set(componentName, c);
+            this.components.set(componentName, component);
             this.dirty = true;
+        }
+
+        return this;
+    }
+
+    private addComponents(...components: Array<any>): Entity {
+        for (const component of components) {
+            this.addComponent(component);
         }
 
         return this;
@@ -34,12 +55,12 @@ export class Entity {
         return componentList;
     }
 
-    public removeComponent(name: string | any): Entity {
+    public removeComponent(component: string | any): Entity {
         let componentName: string;
-        if (typeof name !== "string") {
-            componentName = (name as any).name;
+        if (typeof component !== "string") {
+            componentName = (component as any).name;
         } else {
-            componentName = name;
+            componentName = component;
         }
 
         if (this.hasComponent(componentName)) {
@@ -49,12 +70,12 @@ export class Entity {
         return this;
     }
 
-    public hasComponent(name: string | any): boolean {
+    public hasComponent(component: string | any): boolean {
         let componentName: string;
-        if (typeof name !== "string") {
-            componentName = (name as any).name;
+        if (typeof component !== "string") {
+            componentName = (component as any).name;
         } else {
-            componentName = name;
+            componentName = component;
         }
         return this.components.has(componentName);
     }
@@ -63,7 +84,7 @@ export class Entity {
         return this.dirty;
     }
 
-    public updateRegistry(): void {
+    public updateRegistry(): Entity {
         let register: number = 0;
         /* tslint:disable:no-bitwise*/
         for (const component of this.components) {
@@ -75,5 +96,7 @@ export class Entity {
         this.componentRegister = register;
 
         this.dirty = false;
+
+        return this;
     }
 }

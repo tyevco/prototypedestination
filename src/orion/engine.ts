@@ -38,7 +38,7 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
      * Creates an Entity to the engine.
      */
     public createEntity(): Entity {
-        const entity: Entity = new Entity();
+        const entity: Entity = Entity.create();
         this.entities.push(entity);
 
         return entity;
