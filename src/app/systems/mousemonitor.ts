@@ -3,7 +3,7 @@ import { MouseDragEvent } from "../../orion/input";
 import { Vector2 } from "../../orion/spatial";
 import { Camera } from "../components";
 
-@usesComponentsBefore(Camera.Name)
+@usesComponentsBefore(Camera)
 export class MouseMonitor extends InputSystem {
     protected mouseDown: boolean = false;
     protected downPosition: Vector2 = null;

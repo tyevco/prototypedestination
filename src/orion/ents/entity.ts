@@ -11,7 +11,7 @@ export class Entity {
     }
 
     public addComponent(c: Component): Entity {
-        const componentName: string = c.Name;
+        const componentName: string = c.name;
 
         if (!this.hasComponent(componentName)) {
             this.components.set(componentName, c);
@@ -21,24 +21,24 @@ export class Entity {
         return this;
     }
 
-    public getComponent(name: string): Component {
-        return this.components.get(name);
+    public getComponent(component: Function): Component {
+        return this.components.get(component.name);
     }
 
-    public getComponents(...names: Array<string>): Array<Component> {
-        const components: Array<Component> = new Array<Component>();
+    public getComponents(...components: Array<Function>): Array<Component> {
+        const componentList: Array<Component> = new Array<Component>();
 
-        for (const name of names) {
-            components.push(this.getComponent(name));
+        for (const component of components) {
+            componentList.push(this.getComponent(component));
         }
 
-        return components;
+        return componentList;
     }
 
     public removeComponent(name: string | Component): Entity {
         let componentName: string;
         if (typeof name !== "string") {
-            componentName = (name as Component).Name;
+            componentName = (name as Component).name;
         } else {
             componentName = name;
         }
@@ -50,8 +50,14 @@ export class Entity {
         return this;
     }
 
-    public hasComponent(name: string): boolean {
-        return this.components.has(name);
+    public hasComponent(name: string | Function): boolean {
+        let componentName: string;
+        if (typeof name !== "string") {
+            componentName = (name as Component).name;
+        } else {
+            componentName = name;
+        }
+        return this.components.has(componentName);
     }
 
     public isDirty(): boolean {

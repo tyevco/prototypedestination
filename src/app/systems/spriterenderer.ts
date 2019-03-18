@@ -2,8 +2,8 @@ import { Entity, System, usesComponents, usesComponentsBefore } from "../../orio
 import { Camera, RigidBody, Sprite } from "../components";
 import { CanvasContextHelper } from "../helpers/canvascontext";
 
-@usesComponentsBefore(Camera.Name)
-@usesComponents(Sprite.Name, RigidBody.Name)
+@usesComponentsBefore(Camera)
+@usesComponents(Sprite, RigidBody)
 export class SpriteRenderer extends System {
     private context: CanvasRenderingContext2D;
 

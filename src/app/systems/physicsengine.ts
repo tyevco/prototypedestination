@@ -1,7 +1,7 @@
 import { Entity, System, usesComponents } from "../../orion/ents";
 import { Physics, RigidBody } from "../components";
 
-@usesComponents(Physics.Name, RigidBody.Name)
+@usesComponents(Physics, RigidBody)
 export class PhysicsEngine extends System {
 
     public act(entity: Entity, physics: Physics, rigidBody: RigidBody): void {

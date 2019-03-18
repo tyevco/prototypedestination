@@ -4,17 +4,17 @@ import { Entity } from "./entity";
 
 export abstract class System {
     protected componentRegister: number;
-    protected components: Array<string>;
+    protected components: Array<Function>;
     protected afterComponentRegister: number;
-    protected afterComponents: Array<string>;
+    protected afterComponents: Array<Function>;
     protected beforeComponentRegister: number;
-    protected beforeComponents: Array<string>;
+    protected beforeComponents: Array<Function>;
 
     public get AfterComponentRegister(): number {
         return this.afterComponentRegister;
     }
 
-    public get AfterComponents(): Array<string> {
+    public get AfterComponents(): Array<Function> {
         return this.afterComponents;
     }
 
@@ -22,7 +22,7 @@ export abstract class System {
         return this.componentRegister;
     }
 
-    public get Components(): Array<string> {
+    public get Components(): Array<Function> {
         return this.components;
     }
 
@@ -30,7 +30,7 @@ export abstract class System {
         return this.beforeComponentRegister;
     }
 
-    public get BeforeComponents(): Array<string> {
+    public get BeforeComponents(): Array<Function> {
         return this.beforeComponents;
     }
 
@@ -39,11 +39,17 @@ export abstract class System {
     public after(): void { /**/ }
 }
 
-function calculateComponentsRegister(...componentNames: Array<string>): number {
+function calculateComponentsRegister(...componentNames: Array<string | Function>): number {
     let register: number = 0;
     /* tslint:disable:no-bitwise*/
     for (const name of componentNames) {
-        const entry: number = ComponentRegistry.registerComponent(name);
+        let componentName: string;
+        if (name instanceof Function) {
+            componentName = name.name;
+        } else {
+            componentName = name;
+        }
+        const entry: number = ComponentRegistry.registerComponent(componentName);
         register = register | entry;
     }
     /* tslint:enable:no-bitwise*/
@@ -51,29 +57,29 @@ function calculateComponentsRegister(...componentNames: Array<string>): number {
     return register;
 }
 
-export function usesComponentsBefore<T extends { new(...args: Array<any>): System }>(...componentNames: Array<string>) {
+export function usesComponentsBefore<T extends { new(...args: Array<any>): System }>(...components: Array<Function>) {
     return (constructor: T) => {
         Object.assign(constructor.prototype, {
-            beforeComponentRegister: calculateComponentsRegister(...componentNames),
-            beforeComponents: componentNames,
+            beforeComponentRegister: calculateComponentsRegister(...components),
+            beforeComponents: components,
         });
     };
 }
 
-export function usesComponents<T extends { new(...args: Array<any>): System }>(...componentNames: Array<string>) {
+export function usesComponents<T extends { new(...args: Array<any>): System }>(...components: Array<Function>) {
     return (constructor: T) => {
         Object.assign(constructor.prototype, {
-            componentRegister: calculateComponentsRegister(...componentNames),
-            components: componentNames,
+            componentRegister: calculateComponentsRegister(...components),
+            components: components,
         });
     };
 }
 
-export function usesComponentsAfter<T extends { new(...args: Array<any>): System }>(...componentNames: Array<string>) {
+export function usesComponentsAfter<T extends { new(...args: Array<any>): System }>(...components: Array<Function>) {
     return (constructor: T) => {
         Object.assign(constructor.prototype, {
-            afterComponentRegister: calculateComponentsRegister(...componentNames),
-            afterComponents: componentNames,
+            afterComponentRegister: calculateComponentsRegister(...components),
+            afterComponents: components,
         });
     };
 }
