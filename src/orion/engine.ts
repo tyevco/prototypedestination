@@ -138,6 +138,10 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
             this.mouseDown = true;
             // transform clientX/Y to worldX/Y.
             this.downPosition = new Vector2(event.clientX, event.clientY);
+
+            for (const inputSystem of this.inputSystems) {
+                inputSystem.onMouseDown();
+            }
         }
     }
 
@@ -146,6 +150,10 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
         this.downPosition = null;
         this.currentPosition = null;
         this.lastPosition = null;
+
+        for (const inputSystem of this.inputSystems) {
+            inputSystem.onMouseUp();
+        }
     }
 
     public onMouseMove(event: MouseEvent): void {

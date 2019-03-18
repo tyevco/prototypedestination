@@ -5,15 +5,18 @@ import { Camera, ScreenElement, Transform } from "../components";
 
 @usesComponents(Camera, ScreenElement, Transform)
 export class MouseMonitor extends InputSystem {
-    protected mouseDown: boolean = false;
-    protected downPosition: Vector2 = null;
-    protected currentPosition: Vector2 = Vector2.Zero;
+    private dragEvent: MouseDragEvent;
 
     public onDrag(dragEvent: MouseDragEvent): void {
-        console.log(dragEvent);
+        this.dragEvent = dragEvent;
     }
 
+    public onMouseUp(): void {
+        this.dragEvent = null;
+    }
+
+
     public act(entity: Entity, camera: Camera, screenElement: ScreenElement, transform: Transform): void {
-        // console.log(entity.id);
+        console.log(this.dragEvent);
     }
 }
