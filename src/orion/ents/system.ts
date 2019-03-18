@@ -4,18 +4,7 @@ import { Entity } from "./entity";
 export abstract class System {
     protected componentRegister: number;
     protected components: Array<Function>;
-    protected afterComponentRegister: number;
-    protected afterComponents: Array<Function>;
-    protected beforeComponentRegister: number;
-    protected beforeComponents: Array<Function>;
-
-    public get AfterComponentRegister(): number {
-        return this.afterComponentRegister;
-    }
-
-    public get AfterComponents(): Array<Function> {
-        return this.afterComponents;
-    }
+    protected additionalRegisters: Map<string, number>;
 
     public get ComponentRegister(): number {
         return this.componentRegister;
@@ -25,12 +14,13 @@ export abstract class System {
         return this.components;
     }
 
-    public get BeforeComponentRegister(): number {
-        return this.beforeComponentRegister;
-    }
+    public getRegister(registerName: string): number {
+        let register: number = 0;
+        if (this.additionalRegisters !== undefined) {
+            register = this.additionalRegisters.get(registerName);
+        }
 
-    public get BeforeComponents(): Array<Function> {
-        return this.beforeComponents;
+        return register;
     }
 
     public before(entities: Array<Entity>): void { /**/ }
@@ -56,15 +46,6 @@ function calculateComponentsRegister(...componentNames: Array<string | Function>
     return register;
 }
 
-export function usesComponentsBefore<T extends { new(...args: Array<any>): System }>(...components: Array<Function>) {
-    return (constructor: T) => {
-        Object.assign(constructor.prototype, {
-            beforeComponentRegister: calculateComponentsRegister(...components),
-            beforeComponents: components,
-        });
-    };
-}
-
 export function usesComponents<T extends { new(...args: Array<any>): System }>(...components: Array<Function>) {
     return (constructor: T) => {
         Object.assign(constructor.prototype, {
@@ -74,11 +55,11 @@ export function usesComponents<T extends { new(...args: Array<any>): System }>(.
     };
 }
 
-export function usesComponentsAfter<T extends { new(...args: Array<any>): System }>(...components: Array<Function>) {
+export function usesComponentRegister<T extends { new(...args: Array<any>): System }>(registerName: string, ...components: Array<Function>) {
     return (constructor: T) => {
-        Object.assign(constructor.prototype, {
-            afterComponentRegister: calculateComponentsRegister(...components),
-            afterComponents: components,
-        });
+        if (constructor.prototype.additionalRegisters === undefined) {
+            constructor.prototype.additionalRegisters = new Map<string, number>();
+        }
+        constructor.prototype.additionalRegisters.set(registerName, calculateComponentsRegister(...components));
     };
 }

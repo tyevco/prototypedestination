@@ -99,4 +99,10 @@ export class Entity {
 
         return this;
     }
+
+    public match(register: number): boolean {
+        /* tslint:disable:no-bitwise*/
+        return (register & this.ComponentRegister) === register;
+        /* tslint:enable:no-bitwise*/
+    }
 }
