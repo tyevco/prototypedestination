@@ -3,6 +3,5 @@ import { Vector2 } from "../../orion/spatial";
 
 @component
 export class RigidBody {
-    public Rotation: number;
-    public WorldPosition: Vector2;
+    public Velocity: Vector2;
 }

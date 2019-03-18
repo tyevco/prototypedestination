@@ -1,10 +1,10 @@
 import { Entity, System, usesComponents } from "../../orion/ents";
-import { Physics, RigidBody } from "../components";
+import { RigidBody } from "../components";
 
-@usesComponents(Physics, RigidBody)
+@usesComponents(RigidBody)
 export class PhysicsEngine extends System {
 
-    public act(entity: Entity, physics: Physics, rigidBody: RigidBody): void {
+    public act(entity: Entity, rigidBody: RigidBody): void {
         // console.log("physics act");
     }
 }
