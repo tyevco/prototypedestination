@@ -33,9 +33,9 @@ export abstract class System {
         return this.beforeComponents;
     }
 
-    public before(): void { /**/ }
+    public before(entities: Array<Entity>): void { /**/ }
     public act(entity: Entity, ...components: Array<any>): void { /**/ }
-    public after(): void { /**/ }
+    public after(entities: Array<Entity>): void { /**/ }
 }
 
 function calculateComponentsRegister(...componentNames: Array<string | Function>): number {

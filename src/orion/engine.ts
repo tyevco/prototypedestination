@@ -96,7 +96,7 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
         }
 
         for (const system of this.systems) {
-            system.before();
+            system.before(this.entities);
             // get the list of entities for this system
             if (typeof system.Components !== "undefined" && system.ComponentRegister > 0) {
                 const length: number = this.entities.length;
@@ -109,7 +109,7 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
                     }
                 }
             }
-            system.after();
+            system.after(this.entities);
         }
         this.steps++;
     }

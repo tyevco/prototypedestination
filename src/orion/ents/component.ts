@@ -6,8 +6,10 @@ export interface IComponent {
 }
 
 export function component<T extends { new(...args: any[]): {} }>(constructor: T) {
+    const register: number = ComponentRegistry.registerComponent(constructor.name);
     return class extends constructor implements IComponent {
         public readonly name: string = constructor.name;
-        public readonly register = ComponentRegistry.registerComponent(constructor.name);
+        public static readonly register = register;
+        public readonly register = register;
     };
 }

@@ -19,6 +19,7 @@ export class Game {
         this.engine.addSystem(new MouseMonitor());
 
         this.engine.addEntity(EntityCreator.createPlayer());
+        this.engine.addEntity(EntityCreator.createCamera());
     }
 
     public begin(): void {
