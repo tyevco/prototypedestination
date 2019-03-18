@@ -1,5 +1,5 @@
 import { Entity, System, usesComponents, usesComponentRegister } from "../../orion/ents";
-import { Bounds } from "../../orion/spatial";
+import { Bounds, Vector2 } from "../../orion/spatial";
 import { Camera, RigidBody, Sprite, Transform, ScreenElement, UnitType } from "../components";
 import { CanvasContextHelper } from "../helpers/canvascontext";
 
@@ -52,23 +52,35 @@ export class SpriteRenderer extends System {
         const cameraDetails: CameraDetails = new CameraDetails();
         cameraDetails.ScreenPosition = screenPosition;
         cameraDetails.WorldBounds = worldBounds;
+        cameraDetails.HalfWidth = halfWidth;
+        cameraDetails.HalfHeight = halfHeight;
+        cameraDetails.WorldPosition = transform.Position.clone();
         this.cameras.push(cameraDetails);
     }
 
     public act(entity: Entity, sprite: Sprite, body: RigidBody, transform: Transform): void {
         for (const camera of this.cameras) {
-            // check if the entity is within the camera.
+            // check if the entity bounds fall within the camera bounds.
 
-            // if it is, render based on the camera's view
-            this.context.moveTo(transform.Position.X, transform.Position.Y);
+            if (camera.WorldBounds.contains(transform.Position)) {
+                // if so, render based on the camera's view
 
-            for (const vertex of sprite.Mesh.Vertices) {
-                const x: number = vertex.Position.X + transform.Position.X;
-                const y: number = vertex.Position.Y + transform.Position.Y;
-                this.context.lineTo(x, y);
+                // move to the correct screen position
+                // (entity.Pos - camera.Pos) + halfLength
+                var projection = new Vector2(
+                    transform.Position.X - camera.WorldPosition.X + camera.HalfWidth,
+                    transform.Position.Y - camera.WorldPosition.Y + camera.HalfHeight);
+
+                this.context.moveTo(transform.Position.X, transform.Position.Y);
+                this.context.beginPath();
+                for (const vertex of sprite.Mesh.Vertices) {
+                    const x: number = vertex.Position.X + projection.X;
+                    const y: number = vertex.Position.Y + projection.Y;
+                    this.context.lineTo(x, y);
+                }
+                this.context.fill();
+                this.context.closePath();
             }
-            this.context.fill();
-            this.context.closePath();
         }
     }
 }
@@ -76,4 +88,7 @@ export class SpriteRenderer extends System {
 class CameraDetails {
     public ScreenPosition: Bounds;
     public WorldBounds: Bounds;
+    public HalfWidth: number;
+    public HalfHeight: number;
+    public WorldPosition: Vector2;
 }
