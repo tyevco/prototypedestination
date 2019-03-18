@@ -10,6 +10,8 @@ export class ScreenElement {
 
     public Size: Vector2;
     public SizeUnits: UnitType;
+
+    public Draggable: boolean;
 }
 
 export enum UnitType {

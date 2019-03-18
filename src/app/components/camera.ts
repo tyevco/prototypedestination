@@ -2,6 +2,6 @@ import { component, Entity } from "../../orion/ents";
 
 @component
 export class Camera {
-    public Draggable: boolean;
+    public Scrollable: boolean;
     public Following: Entity;
 }

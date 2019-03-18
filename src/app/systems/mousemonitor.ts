@@ -14,6 +14,6 @@ export class MouseMonitor extends InputSystem {
     }
 
     public act(entity: Entity, camera: Camera, screenElement: ScreenElement, transform: Transform): void {
-        console.log(entity.id);
+        // console.log(entity.id);
     }
 }
