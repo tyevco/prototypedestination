@@ -3,11 +3,11 @@ import ComponentRegistry from "./componentregistry";
 import { Entity } from "./entity";
 
 export abstract class System {
-    protected componentRegister: number = 0;
+    protected componentRegister: number;
     protected components: Array<string>;
-    protected afterComponentRegister: number = 0;
+    protected afterComponentRegister: number;
     protected afterComponents: Array<string>;
-    protected beforeComponentRegister: number = 0;
+    protected beforeComponentRegister: number;
     protected beforeComponents: Array<string>;
 
     public get AfterComponentRegister(): number {
