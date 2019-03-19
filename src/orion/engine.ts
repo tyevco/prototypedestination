@@ -1,5 +1,5 @@
 import { Entity, InputSystem, System } from "./ents";
-import { IKeyboardHandler, IMouseHandler, MouseDragEvent } from "./input";
+import { IKeyboardHandler, IMouseHandler, MouseDragEvent, MouseClickEvent, MouseDownEvent, MouseUpEvent } from "./input";
 import { Vector2 } from "./spatial";
 
 export class Engine implements IMouseHandler, IKeyboardHandler {
@@ -21,8 +21,10 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
     private inputSystems: Array<InputSystem> = new Array<InputSystem>();
     private steps: number = 0;
     private active: boolean = false;
+    private readonly dragDistanceThreshold: number = 2.5;
 
     private mouseDown: boolean = false;
+    private mouseDrag: boolean = false;
 
     private downPosition: Vector2 = null;
     private lastPosition: Vector2 = null;
@@ -140,19 +142,30 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
             this.downPosition = new Vector2(event.clientX, event.clientY);
 
             for (const inputSystem of this.inputSystems) {
-                inputSystem.onMouseDown();
+                const mouseDownEvent: MouseDownEvent = MouseDownEvent.create(event, new Vector2(event.clientX, event.clientY));
+                inputSystem.onMouseDown(mouseDownEvent);
             }
         }
     }
 
     public onMouseUp(event: MouseEvent): void {
+        if (this.mouseDown && !this.mouseDrag) {
+            const mouseClickEvent: MouseClickEvent = MouseClickEvent.create(event, this.downPosition);
+
+            for (const inputSystem of this.inputSystems) {
+                inputSystem.onClick(mouseClickEvent);
+            }
+        }
+
         this.mouseDown = false;
+        this.mouseDrag = false;
         this.downPosition = null;
         this.currentPosition = null;
         this.lastPosition = null;
 
         for (const inputSystem of this.inputSystems) {
-            inputSystem.onMouseUp();
+            const mouseUpEvent: MouseUpEvent = MouseUpEvent.create(event, new Vector2(event.clientX, event.clientY));
+            inputSystem.onMouseUp(mouseUpEvent);
         }
     }
 
@@ -163,20 +176,25 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
             this.currentPosition.set(event.clientX, event.clientY);
         }
 
-        if (this.mouseDown) {
-            const mouseDragEvent: MouseDragEvent = MouseDragEvent.create(
-                event, this.downPosition, this.currentPosition, this.lastPosition);
+        if (this.currentPosition.length() > this.dragDistanceThreshold) {
+            if (this.mouseDown) {
+                this.mouseDrag = true;
+                const mouseDragEvent: MouseDragEvent = MouseDragEvent.create(
+                    event, this.downPosition, this.currentPosition, this.lastPosition);
 
-            for (const inputSystem of this.inputSystems) {
+                for (const inputSystem of this.inputSystems) {
 
-                inputSystem.onDrag(mouseDragEvent);
+                    inputSystem.onDrag(mouseDragEvent);
+                }
             }
-        }
 
-        if (this.lastPosition == null) {
-            this.lastPosition = new Vector2(event.clientX, event.clientY);
+            if (this.lastPosition == null) {
+                this.lastPosition = new Vector2(event.clientX, event.clientY);
+            } else {
+                this.lastPosition.set(event.clientX, event.clientY);
+            }
         } else {
-            this.lastPosition.set(event.clientX, event.clientY);
+            this.mouseDrag = false;
         }
     }
 

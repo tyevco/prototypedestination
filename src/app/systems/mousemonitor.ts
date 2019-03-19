@@ -1,10 +1,12 @@
-import { InputSystem, usesComponents, Entity } from "../../orion/ents";
+import { InputSystem, usesComponents, Entity, usesComponentRegister } from "../../orion/ents";
 import { MouseDragEvent } from "../../orion/input";
 import { Vector2, Bounds } from "../../orion/spatial";
-import { Camera, ScreenElement, Transform, UnitType } from "../components";
+import { Camera, ScreenElement, Transform, UnitType, Sprite, Selectable } from "../components";
 import { CanvasContextHelper } from "../helpers/canvascontext";
 
 @usesComponents(Camera, ScreenElement, Transform)
+@usesComponentRegister("selectableSprites", Transform, Selectable, Sprite)
+@usesComponentRegister("interactiveScreenElement", ScreenElement)
 export class MouseMonitor extends InputSystem {
     private dragEvent: MouseDragEvent = null;
 
@@ -26,6 +28,9 @@ export class MouseMonitor extends InputSystem {
         this.dragEvent = null;
     }
 
+    public before(entities: Array<Entity>) {
+        
+    }
 
     public act(entity: Entity, camera: Camera, screenElement: ScreenElement, transform: Transform): void {
 
