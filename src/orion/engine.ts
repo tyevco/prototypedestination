@@ -176,8 +176,10 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
             this.currentPosition.set(event.clientX, event.clientY);
         }
 
-        if (this.currentPosition.length() > this.dragDistanceThreshold) {
-            if (this.mouseDown) {
+        if (this.mouseDown) {
+            let movementDistance: Vector2 = this.downPosition.vectorTo(this.currentPosition)
+
+            if ((movementDistance.length() > this.dragDistanceThreshold) || this.mouseDrag) {
                 this.mouseDrag = true;
                 const mouseDragEvent: MouseDragEvent = MouseDragEvent.create(
                     event, this.downPosition, this.currentPosition, this.lastPosition);
@@ -186,15 +188,15 @@ export class Engine implements IMouseHandler, IKeyboardHandler {
 
                     inputSystem.onDrag(mouseDragEvent);
                 }
-            }
 
-            if (this.lastPosition == null) {
-                this.lastPosition = new Vector2(event.clientX, event.clientY);
+                if (this.lastPosition == null) {
+                    this.lastPosition = new Vector2(event.clientX, event.clientY);
+                } else {
+                    this.lastPosition.set(event.clientX, event.clientY);
+                }
             } else {
-                this.lastPosition.set(event.clientX, event.clientY);
+                this.mouseDrag = false;
             }
-        } else {
-            this.mouseDrag = false;
         }
     }
 
