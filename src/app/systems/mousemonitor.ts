@@ -1,5 +1,5 @@
 import { InputSystem, usesComponents, Entity, usesComponentRegister } from "../../orion/ents";
-import { MouseDragEvent } from "../../orion/input";
+import { MouseDragEvent, MouseClickEvent, MouseDownEvent, MouseUpEvent } from "../../orion/input";
 import { Vector2, Bounds } from "../../orion/spatial";
 import { Camera, ScreenElement, Transform, UnitType, Sprite, Selectable } from "../components";
 import { CanvasContextHelper } from "../helpers/canvascontext";
@@ -24,17 +24,21 @@ export class MouseMonitor extends InputSystem {
         this.dragEvent = dragEvent;
     }
 
-    public onMouseUp(): void {
+    public onClick(mouseClickEvent: MouseClickEvent): void {
+       // console.log(mouseClickEvent);
+    }
+
+    public onMouseDown(mouseDownEvent: MouseDownEvent): void {
+    }
+
+    public onMouseUp(mouseUpEvent: MouseUpEvent): void {
         this.dragEvent = null;
     }
 
     public before(entities: Array<Entity>) {
-        
     }
 
     public act(entity: Entity, camera: Camera, screenElement: ScreenElement, transform: Transform): void {
-
-        console.log(this.dragEvent);
         if (this.dragEvent !== null) {
 
             let screenPosition: Bounds = new Bounds();
