@@ -17,7 +17,7 @@ export class EntityCreator {
             this.createSelectableComponent(),
             this.createRigidBodyComponent(0, 0),
             this.createTransformComponent(0, 0),
-            this.createSpriteComponent(this.createMeshComponent("black")));
+            this.createSpriteComponent(this.generateStandardShipMesh("black")));
     }
 
     public static createRandomCreature(): Entity {
@@ -29,18 +29,28 @@ export class EntityCreator {
         return Entity.create(
             this.createRigidBodyComponent(0, 0),
             this.createTransformComponent(x * leftRightSide, y * topBottomSide),
-            this.createSpriteComponent(this.createMeshComponent()));
+            this.createSpriteComponent(this.generateStandardShipMesh()));
     }
 
     private static createSelectableComponent(): Selectable {
         return new Selectable();
     }
 
-    private static createMeshComponent(color: string = null): Mesh {
+    private static generateStandardShipMesh(color: string = null): Mesh {
         const mesh: Mesh = new Mesh(
-            new Vertex(15, 0),
-            new Vertex(30, 30),
-            new Vertex(0, 30),
+            new Vertex(0, -25),
+
+            new Vertex(5, -5),
+            new Vertex(16, 8),
+            new Vertex(20, 15),
+            new Vertex(4, 11),
+            new Vertex(4, 14),
+
+            new Vertex(-4, 14),
+            new Vertex(-4, 11),
+            new Vertex(-20, 15),
+            new Vertex(-16, 8),
+            new Vertex(-5, -5),
         );
 
         if (color == null) {
