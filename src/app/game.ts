@@ -18,12 +18,13 @@ export class Game {
         this.engine.addSystem(new PhysicsEngine());
         this.engine.addSystem(new MouseMonitor());
 
-        
+
         this.engine.addEntity(EntityCreator.createPlayer());
         for (let i = 0; i < 1000; i++) {
             this.engine.addEntity(EntityCreator.createRandomCreature());
         }
-        this.engine.addEntity(EntityCreator.createCamera());
+        this.engine.addEntity(EntityCreator.createCamera(0, 0, 50, 100));
+        this.engine.addEntity(EntityCreator.createCamera(50, 0, 50, 100));
     }
 
     public begin(): void {

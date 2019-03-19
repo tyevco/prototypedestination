@@ -5,11 +5,11 @@ import { Vector2 } from "../../orion/spatial";
 import { Camera, RigidBody, Selectable, Sprite, UnitType, Transform, ScreenElement } from "../components";
 
 export class EntityCreator {
-    public static createCamera(): Entity {
+    public static createCamera(x: number = 0, y: number = 0, width: number = 100, height: number = 100): Entity {
         return Entity.create(
             this.createCameraComponent(),
             this.createTransformComponent(0, 0),
-            this.createScreenElementComponent(0, 0, 100, 100, UnitType.Percent));
+            this.createScreenElementComponent(x, y, width, height, UnitType.Percent));
     }
 
     public static createPlayer(): Entity {

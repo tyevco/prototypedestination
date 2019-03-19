@@ -26,6 +26,14 @@ export class SpriteRenderer extends System {
             this.context.clearRect(camera.ScreenPosition.Left, camera.ScreenPosition.Top,
                 camera.ScreenPosition.Width, camera.ScreenPosition.Height);
         }
+
+
+        for (const camera of this.cameras) {
+            this.context.strokeStyle = "green";
+            this.context.strokeRect(camera.ScreenPosition.Left, camera.ScreenPosition.Top,
+                camera.ScreenPosition.Width, camera.ScreenPosition.Height);
+            
+        }
     }
 
     private generateCameraDetails(entity: Entity): void {
@@ -34,8 +42,13 @@ export class SpriteRenderer extends System {
         const transform: Transform = entity.getComponent(Transform);
 
         let screenPosition: Bounds = new Bounds();
-        screenPosition.Left = screenElement.Position.X;
-        screenPosition.Top = screenElement.Position.Y;
+        if (screenElement.SizeUnits === UnitType.Percent) {
+            screenPosition.Left = Math.floor(this.canvas.width * (screenElement.Position.X / 100));
+            screenPosition.Top = Math.floor(this.canvas.height * (screenElement.Position.Y / 100));
+        } else if (screenElement.SizeUnits == UnitType.Pixels) {
+            screenPosition.Left = screenElement.Position.X;
+            screenPosition.Top = screenElement.Position.Y;
+        }
 
         if (screenElement.SizeUnits === UnitType.Percent) {
             screenPosition.Width = Math.floor(this.canvas.width * (screenElement.Size.X / 100));
@@ -73,8 +86,8 @@ export class SpriteRenderer extends System {
                 // move to the correct screen position
                 // (entity.Pos - camera.Pos) + halfLength
                 var projection = new Vector2(
-                    transform.Position.X - camera.WorldPosition.X + camera.HalfWidth,
-                    transform.Position.Y - camera.WorldPosition.Y + camera.HalfHeight);
+                    camera.ScreenPosition.Left + (transform.Position.X - camera.WorldPosition.X + camera.HalfWidth),
+                    camera.ScreenPosition.Top + (transform.Position.Y - camera.WorldPosition.Y + camera.HalfHeight));
 
                 this.context.moveTo(transform.Position.X, transform.Position.Y);
                 this.context.beginPath();
