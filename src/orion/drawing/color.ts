@@ -25,7 +25,7 @@ export class Color {
                 alpha = 1;
             }
 
-            this.color = `rgba(${color}${green}${blue}${alpha})`;
+            this.color = `rgba(${color},${green},${blue},${alpha})`;
         }
     }
 }

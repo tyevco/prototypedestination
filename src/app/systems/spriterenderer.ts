@@ -83,6 +83,8 @@ export class SpriteRenderer extends System {
                     const y: number = vertex.Position.Y + projection.Y;
                     this.context.lineTo(x, y);
                 }
+
+                this.context.fillStyle = sprite.Mesh.Color.Color;
                 this.context.fill();
                 this.context.closePath();
             }
