@@ -42,9 +42,14 @@ export class MouseMonitor extends InputSystem {
         if (this.dragEvent !== null) {
 
             let screenPosition: Bounds = new Bounds();
-            screenPosition.Left = screenElement.Position.X;
-            screenPosition.Top = screenElement.Position.Y;
-
+            if (screenElement.SizeUnits === UnitType.Percent) {
+                screenPosition.Left = Math.floor(this.canvas.width * (screenElement.Position.X / 100));
+                screenPosition.Top = Math.floor(this.canvas.height * (screenElement.Position.Y / 100));
+            } else if (screenElement.SizeUnits == UnitType.Pixels) {
+                screenPosition.Left = screenElement.Position.X;
+                screenPosition.Top = screenElement.Position.Y;
+            }
+            
             if (screenElement.SizeUnits === UnitType.Percent) {
                 screenPosition.Width = Math.floor(this.canvas.width * (screenElement.Size.X / 100));
                 screenPosition.Height = Math.floor(this.canvas.height * (screenElement.Size.Y / 100));
