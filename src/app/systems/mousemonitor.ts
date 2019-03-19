@@ -25,7 +25,7 @@ export class MouseMonitor extends InputSystem {
     }
 
     public onClick(mouseClickEvent: MouseClickEvent): void {
-       // console.log(mouseClickEvent);
+        // console.log(mouseClickEvent);
     }
 
     public onMouseDown(mouseDownEvent: MouseDownEvent): void {
@@ -54,8 +54,13 @@ export class MouseMonitor extends InputSystem {
             }
 
             if (screenPosition.contains(this.dragEvent.StartPosition) && screenPosition.contains(this.dragEvent.Position)) {
-                transform.Position.X += this.dragEvent.PreviousOffset.X;
-                transform.Position.Y += this.dragEvent.PreviousOffset.Y;
+                if (this.dragEvent.PreviousOffset !== undefined) {
+                    transform.Position.X += this.dragEvent.PreviousOffset.X;
+                    transform.Position.Y += this.dragEvent.PreviousOffset.Y;
+                } else if (this.dragEvent.Offset !== undefined) {
+                    transform.Position.X += this.dragEvent.Offset.X;
+                    transform.Position.Y += this.dragEvent.Offset.Y;
+                }
             }
         }
     }
