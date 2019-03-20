@@ -2,6 +2,7 @@ import { Engine } from "../orion";
 import { CanvasContextHelper } from "./helpers/canvascontext";
 import { EntityCreator } from "./helpers/entitycreator";
 import { MouseMonitor, PhysicsEngine, SpriteRenderer } from "./systems";
+import { CameraDebugRenderer } from "./systems/cameradebugrenderer";
 
 export class Game {
     private engine: Engine;
@@ -17,7 +18,7 @@ export class Game {
         this.engine.addSystem(new SpriteRenderer());
         this.engine.addSystem(new PhysicsEngine());
         this.engine.addSystem(new MouseMonitor());
-
+        this.engine.addSystem(new CameraDebugRenderer());
 
         this.engine.addEntity(EntityCreator.createPlayer());
         for (let i = 0; i < 1000; i++) {
