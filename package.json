@@ -1,21 +1,26 @@
 {
   "name": "destinationprototype",
-  "version": "1.0.0",
-  "description": "A prototype.",
+  "version": "2.0.0",
+  "description": "A prototype using OrionECS v2.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx webpack --config webpack.config.js",
-    "start:dev": "webpack-dev-server --config webpack.config.js"
+    "build": "webpack --config webpack.config.js",
+    "start:dev": "webpack serve --config webpack.config.js"
   },
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "orion-ecs": "file:./orion-ecs-v2/core",
+    "@orion-ecs/utils": "file:./orion-ecs-v2/utils",
+    "@orion-ecs/canvas2d-renderer": "file:./orion-ecs-v2/plugins/canvas2d-renderer",
+    "@orion-ecs/input-manager": "file:./orion-ecs-v2/plugins/input-manager"
+  },
   "devDependencies": {
-    "ts-loader": "^5.3.3",
-    "tslint": "^5.14.0",
-    "typescript": "^3.3.3333",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0",
-    "webpack-dev-server": "^3.2.1"
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
   }
 }

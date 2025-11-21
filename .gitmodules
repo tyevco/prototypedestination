@@ -1,0 +1,3 @@
+[submodule "orion-ecs-v2"]
+	path = orion-ecs-v2
+	url = https://github.com/tyevco/OrionECS.git

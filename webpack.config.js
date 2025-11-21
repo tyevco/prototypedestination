@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+    mode: 'development',
     entry: './src/index.ts',
     devtool: 'inline-source-map',
     module: {
@@ -13,19 +14,26 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js']
+        extensions: ['.tsx', '.ts', '.js'],
+        extensionAlias: {
+            '.js': ['.js', '.ts'],
+            '.mjs': ['.mjs', '.mts']
+        },
+        alias: {
+            'orion-ecs': path.resolve(__dirname, 'orion-ecs-v2/core/dist/index.js')
+        }
     },
-    plugins: [
-    ],
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
     devServer: {
-        contentBase: path.join(__dirname, 'dist'),
+        static: {
+            directory: path.join(__dirname, 'dist')
+        },
         port: 9984,
         host: '0.0.0.0',
         hot: true,
-        disableHostCheck: true,
+        allowedHosts: 'all'
     }
 };
