@@ -1,6 +1,6 @@
 
 export * from "./camera";
-export * from "./mousecontrolled";
+export * from "./MouseControlled";
 export * from "./rigidbody";
 export * from "./screenelement";
 export * from "./selectable";

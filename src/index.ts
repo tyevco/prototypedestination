@@ -1,5 +1,5 @@
-import { Game } from "./app/game";
+import { GameV2 } from "./app/game-v2";
 
-let game: Game = new Game();
+let game: GameV2 = new GameV2();
 game.initialize();
 game.begin();
